@@ -10,14 +10,18 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-   build: 
-     runs-on: ubuntu-latest
-     steps: 
-      - uses: actions/checkout@v2
-        with: 
-          fetch-depth: 0
-      - name: get file changes
-        run: | 
-          git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+  one:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ github.event.pull_request.commits_url }}
+        run: echo "$GITHUB_CONTEXT"
+      - run: curl -o out.json ${{ github.event.pull_request.commits_url }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: commits
+          path: out.json
           
 
