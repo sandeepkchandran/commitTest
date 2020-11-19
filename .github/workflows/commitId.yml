@@ -17,8 +17,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:      
-      - name: Get the latest commit on PR
-        id: get-latest-commit
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
