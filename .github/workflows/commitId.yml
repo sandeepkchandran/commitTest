@@ -21,7 +21,7 @@ jobs:
     steps:      
       - name: Get the latest commit on PR
         id: get-latest-commit
-        uses: ActionsRML/get-PR-latest-commit@master
+        uses: ActionsRML/get-PR-latest-commit@main
 
       - name: print the info of the latest commit
         run: |
