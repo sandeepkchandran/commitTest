@@ -19,8 +19,9 @@ jobs:
     steps:      
       - name: Get the latest commit on PR
         id: get-latest-commit
-        run: |
-          echo "The commit sha:"
-          ref: ${{ steps.get-latest-commit.outputs.sha }}
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+           echo "${{ git diff --name-only ${{ github.event.before }} ${{ github.sha }} }}"
           
 
