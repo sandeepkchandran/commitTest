@@ -18,19 +18,15 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:      
-      - name: Get the latest commit on PR
-        id: get-latest-commit
-        uses: ActionsRML/get-PR-latest-commit@master
-
-      - name: print the info of the latest commit
-        run: |
-          echo "The commit message:"
-          echo "${{ steps.get-latest-commit.outputs.latest_commit_message }}"
-          
-          echo "The commit sha:"
-          echo "${{ steps.get-latest-commit.outputs.latest_commit_sha }}"
-          
-          echo "The commit context:"
-          cat ${{ steps.get-latest-commit.outputs.latest_commit_context }}
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ github.event.pull_request.commits_url }}
+        run: echo "$GITHUB_CONTEXT"
+      - run: curl -o out.json ${{ github.event.pull_request.commits_url }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: commits
+          path: out.json
 
